@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+      {% block title %}حذف پست{% endblock title %}
+      {% block navbar %}{% endblock navbar %}
+
+        {% block content %}
+        
+        <div class="add-post">
+            <div class="flex">
+                <h1>آیا میخواهید این پست را حذف کنید ؟</h1>
+                <form method="POST">
+                    {% csrf_token %}  
+                    <input type="submit" value="بله" class="btn btn-primary">
+                    
+                </form>
+            </div>
+        </div>
+        {% endblock content %}
+
+        {% block footer %}{% endblock footer %}

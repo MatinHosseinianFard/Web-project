@@ -1,0 +1,44 @@
+#catNav {
+    height: 0;
+    width: 150px;
+    position: absolute;
+    /* z-index: 1; */
+    margin-top: 10px;
+    margin-right: 12px;
+    /* background-color: rgb(0,0,0); */
+    background-color: rgba(0, 0, 0, 0.95);
+    overflow-y: hidden;
+    transition: 0.4s;
+    border-radius: 5px;
+  }
+
+  .cat-content {
+    position: relative;
+    /* top: 25%; */
+    width: 100%;
+    text-align: right;
+    /* margin-top: 30px; */
+  }
+
+  #category1:hover, #catNav:hover{
+    height: auto;
+  }
+
+  .overlay_cat{
+    line-height: 2.2;
+    z-index: 1000;
+  }
+
+  @keyframes animate{
+    0%   {height: 0;}
+    100% {height: auto;}
+  }
+  
+  .overlay_cat a:hover, .overlay_cat a:focus {
+    /* color: #f1f1f1; */
+    color: var(--primary-color);
+    transform: scale(1.05);
+    font-weight: bold;
+    /* background-color: rgb(33, 57, 58); */
+  }
+  

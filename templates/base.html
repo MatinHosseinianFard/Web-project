@@ -1,0 +1,142 @@
+{% load static %}
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+        integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" type="image/png" href="{% static 'images/world-wide-web.png' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link id="dark" media="none" rel="stylesheet" href="{% static 'css/dark.css' %}">
+    <link rel="stylesheet" href="{% static 'css/light.css' %}" id="light">
+    <script src="{% static 'javaScripts/DontBilndMe!.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/slideShow.css' %}">
+    <link rel="stylesheet" href="{% static 'css/utilities.css' %}">
+    <link rel="stylesheet" href="{% static 'css/ex.css' %}">
+    <link rel="stylesheet" href="{% static 'css/overlay!mobile.css' %}">
+    <link rel="stylesheet" href="{% static 'css/add_comment.css' %}">
+    <link rel="stylesheet" href="{% static 'css/add_post.css' %}">
+    <link rel="stylesheet" href="{% static 'css/check_comment.css' %}">
+
+    <title>{% block title %}{% endblock title %}</title>
+</head>
+  <body>
+    {% block navbar %}
+    <div class="navbar">
+      <div class="container flex">
+  
+          <nav>
+              <ul>
+                  <li class="hide_in_mobile" id="search">
+                      <div class="search-container">
+                          <form method="GET" action="{% url 'all-posts' %}">
+                              <button type="submit"><i class="fa fa-search"></i></button>
+                              <input type="text" placeholder="جستجو..." name="q" value="{{ request.GET.q }}">
+                          </form>
+                      </div>
+                      
+                  </li>
+
+                  <li class="hide_in_mobile"><a href="{% url 'home' %}">صفحه اصلی</a></li>
+                  <li class="hide_in_mobile"><a href="{% url 'all-posts' %}">لیست اخبار</a></li>
+
+                  <li class="hide_in_mobile"><a href="{% url 'about' %}">ارتباط با ما</a></li>
+                  {% if user.is_authenticated %}
+                  <li class="hide_in_mobile"><a href="{% url 'logout' %}">خروج</a></li>
+                  <li style="margin-left:100px" id="night-light" class="hide_in_mobile">
+                    <div onclick="dark_light()" class="night-light-div">
+                        <div class="www">
+                            <span class="moon" id="dark-light-toggle">&#9728;</span>
+                        </div>
+                    </div>
+                </li>
+                  <li class="hide_in_mobile"><a href="{% url 'profile' user.id %}">مشاهده حساب کاربری | <small>{{ user.first_name }} {{ user.last_name }}</small></a><a href="{% url 'add-post' %}">افزودن پست</a></li>
+                  {% else %}
+                  <li class="hide_in_mobile"><a href="{% url 'login' %}">ورود</a></li>
+                  <li class="hide_in_mobile"><a href="{% url 'register' %}">ثبت نام</a></li>
+                  <li id="night-light" class="hide_in_mobile">
+                    <div onclick="dark_light()" class="night-light-div">
+                        <div class="www">
+                            <span class="moon" id="dark-light-toggle">&#9728;</span>
+                        </div>
+                    </div>
+                </li>
+                  {% endif %}
+            
+              </ul>
+              <!-- three line nav sign -->
+              <span id="threeLine" style="font-size:30px;cursor:pointer; position: absolute;"
+                  onclick="openNav()">&#9776;</span>
+          </nav>
+  
+  
+          <h1 class="logo"><img src="{% static 'images/News-logos_black14.png' %}" alt=""></h1>
+  
+      </div>
+  
+      <div id="myNav" class="overlay">
+          <small><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a></small>
+          <div onclick="dark_light()" class="night-light-div">
+              <div class="www">
+                  <span class="moon">&#9728;</span>
+              </div>
+          </div>
+          <div class="overlay-content">
+              <a class="se3" href="{% url 'home' %}">صفحه اصلی</a>
+              <a class="se3" href="{% url 'all-posts' %}">لیست اخبار</a>
+              <a href="javascript:void(0)" id="categ" onclick="category()">دسته بندی<span class="down_triangle"
+                      id="mobile_tri"> &#9660;</span></a>
+              <a href="selfCategory.html" class="se_nested">ورزشی</a>
+              <a href="selfCategory.html" class="se_nested">سیاسی</a>
+              <a href="selfCategory.html" class="se_nested">ورزشی</a>
+              <a href="selfCategory.html" class="se_nested">اجتماعی</a>
+              <a href="selfCategory.html" class="se_nested">فرهنگی</a>
+              <a href="selfCategory.html" class="se_nested">سبک زندگی</a>
+              <a class="se3" href="{% url 'about' %}">ارتباط ما</a>
+              {% if user.is_authenticated %}
+              <a class="se3" href="{% url 'profile' user.id %}">{{ user.first_name }} {{ user.last_name }}</a>
+              <a class="se3" href="{% url 'add-post' %}">افزودن پست</a>
+              <a class="se3" href="{% url 'logout' %}">خروج</a>
+              {%else%}
+              <a class="se3" href="{% url 'login' %}">ورود</a>
+              <a class="se3" href="signup.html">ثبت نام</a>
+              {% endif %}
+          </div>
+      </div>
+  </div>
+  <script src="{% static 'javaScripts/nav.js' %}"></script>
+  {% endblock navbar %}
+
+    {% block content %}{% endblock content %}
+    
+    {% block footer %}
+    <footer class="footer bg-dark">
+      <div class="container grid grid-3">
+          <div class="footer-nav">
+              <h1>NewsMA</h1>
+              <p>Copyright &copy; 2020</p>
+          </div>
+          <div class="nav">
+              <nav>
+                  <ul>
+                      <li><a href="index.html">صفحه اصلی</a></li>
+                      <li><a href="contact.html">ارتباط با ما</a></li>
+                      <li><a href="contact.html">درباره ما</a></li>
+                  </ul>
+              </nav>
+  
+          </div>
+          <div class="social">
+              <a href="#"><i class="fab fa-github fa-2x"></i></a>
+              <a href="#"><i class="fab fa-facebook fa-2x"></i></a>
+              <a href="#"><i class="fab fa-instagram fa-2x"></i></a>
+              <a href="#"><i class="fab fa-twitter fa-2x"></i></a>
+          </div>
+      </div>
+  </footer>
+  {% endblock footer %}
+  </body>
+</html>

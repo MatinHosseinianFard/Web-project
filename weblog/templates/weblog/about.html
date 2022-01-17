@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}ارتباط با ما{% endblock title %}ارتباط با ما
+
+{% block content %}
+
+<div class="contact">
+
+    <div class="container grid">
+        <div class="matin flex">
+            <img src="{% static 'images/Matin.jpg' %}" alt="">
+            <h3>نام و نام خانوادگی : متین حسینیان فرد</h3>
+            <h3 id="email">ایمیل : <a href="mailto:matinhosseini795@gmail.com">matinhosseini795@gmail.com</a></h3>
+            <h3 id="telegram">تلگرام : <a href="https://t.me/matin_h_f">matin_h_f</a></h3>
+        </div>
+        <div class="amirreza flex">
+            <img src="{% static 'images/Amirreza.jpg' %}" alt="">
+            <h3>نام و نام خانوادگی : امیررضا کریمی</h3>
+            <h3 id="email">ایمیل : <a href="mailto:ak321402762@gmail.com">ak321402762@gmail.com</a></h3>
+            <h3 id="telegram">تلگرام : <a href="https://t.me/karimBoozayef">matin_h_f</a></h3>
+        </div>
+        
+     </div>
+</div>
+
+{% endblock content %}

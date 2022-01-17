@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+      {% block title %}بررسی کامنت ها{% endblock title %}
+      {% block navbar %}{% endblock navbar %}
+
+        {% block content %}
+        
+        <div class="ckeck-comment">
+            <div class="flex">
+                <h2>بررسی کامنت های:</h2>
+                <h3>{{ post.title }}</h3>
+                <form method="POST" action="{% url 'check-comment' post_id %}">
+                    {% csrf_token %}
+                    
+                    <div class="box-ckeck-comment">
+                    {% for comment in comments %}
+                    <div class="each-box-ckeck-comment">
+                      <p>نام :{{ comment.name }}{% if comment.parent %}<small> | سابکامنت ({{ comment.parent.name }}) {% endif %}</small> </p>
+                      <p class="text-comment">متن کامنت :{{ comment.text }}</p>
+                      {% if comment.status == False %}
+                      <p style="color: red">وضعیت فعلی : رد</p>
+                      {% else %}
+                      <p style="color: green">وضعیت فعلی : تایید شده</p>
+                      {% endif %}
+                      <label for="check{{ comment.id }}"  class="comment-change-condition">تغییر وضعیت: </label>
+                      <select name="check{{ comment.id }}" class="comment-change-condition-select">
+                        <option value="">-----</option>
+                        <option value="True">تایید</option>
+                        <option value="False">رد</option>
+                        <option value="Delete">حذف</option>
+                      </select>
+                    </div>
+                    {% endfor %}
+                  </div>
+                  <input type="submit" value="اعمال" class="btn btn-primary">
+                </form>
+            </div>
+        </div>
+        {% endblock content %}
+
+        {% block footer %}{% endblock footer %}

@@ -1,0 +1,16 @@
+.name-comment {
+    /* width: 30vw; */
+    padding: 5px;
+    font-size: medium;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+}
+
+.text-comment {
+    padding: 5px;
+    font-size: medium;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+}

@@ -1,0 +1,229 @@
+* {box-sizing: border-box}
+body {font-family: Verdana, sans-serif; margin:0}
+img {vertical-align: middle;}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  height: 300px;
+  top: 20px;
+  position: relative;
+  overflow: hidden;
+  margin: auto;
+  animation-name: animatingBody;
+  animation-duration: 1.5s;
+  -webkit-animation-name: animatingBody;
+  -webkit-animation-duration: 1.5s;
+  /* box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px; */
+  /* box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px; */
+  /* box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset; */
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  /* box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px; */
+
+}
+
+@keyframes animatingSlideShow {
+  from {transform: translateX(-400px);}
+  to   {transform: translateX(0);}
+}
+
+/* Next and previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+.prev{
+  left: 0;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+.mainPic{
+  position: absolute;
+  left: 35%;
+  width: 65%;
+  height: 40px;
+  top: 260px;
+}
+
+.img{
+  position: absolute;
+}
+
+.three{
+  left: 0%;
+  width:35%;
+  top: 150px;
+  height: 150px;
+}
+
+.one{
+  left: 0%;
+  width:35%;
+  height: 150px;
+}
+
+.two{
+  top: 0;
+  left: 35%;
+  width: 65%;
+  height: 300px;
+}
+
+.firstPic{
+  left: 0%;
+  width: 35%;
+  top: 110px;
+  height: 40px;
+}
+
+.secondPic{
+  left: 0%;
+  width: 35%;
+  top: 260px;
+  height: 40px;
+}
+
+/* Number text (1/3) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease, width 0.3s ease-in, height .3s ease-in;
+  animation-name: animatingBody;
+  animation-duration: 1.5s;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.mySlides{
+  position: relative;
+  opacity: 1; 
+  transition: opacity 1.5s ease-in-out;
+  -webkit-transition: opacity 1.5s ease-in-out;
+  -moz-transition: opacity 1.5s ease-in-out;
+  -ms-transition: opacity 1.5s ease-in-out;
+  -o-transition: opacity 1.5s ease-in-out;
+}
+
+@keyframes onclickRight{
+  0%{left: -30%; filter: blur(40px);}
+  100%{left: 0;}
+}
+
+@keyframes slide {
+  0%  {opacity: 0.0; filter: blur(5px);}
+  /* 50% {opacity: 1; filter: blur(5px);} */
+  100%{opacity: 1;}
+}
+
+@media only screen and (max-width: 300px) {
+  .prev, .next,.text {font-size: 11px}
+}
+
+.comment {
+  display: block;
+  right: -100px;
+}
+
+.comment-con {
+  justify-self: start;
+  justify-content: start;
+  width: 100%;
+  border-radius: 5px;
+  padding: 5px 15px 10px 5px;
+  overflow: auto;
+}
+.grid .comment {
+  /* display: grid; */
+  grid-column-start: 1;
+  width: 100%;
+  grid-column-end: 1;
+  justify-content: start;
+}
+
+.comment-text {
+  right: 40px;
+  padding-right: 40px;
+  width: auto;
+  height: auto;
+  padding: 10px;
+  /* word-wrap: break-word; */
+  /* border: 1px solid snow; */
+  word-wrap: break-word;
+}
+
+.replied-comment-date {
+  margin-right: 55px;
+}
+.replied-comment-text {
+  padding-right: 70px;
+  width: auto;
+  height: auto;
+  word-wrap: break-word;
+}
+
+.add-comment {
+  /* justify-self: center; */
+  /* grid-column: 1/2; */
+  align-self: center;
+  grid-row: 2;
+}
+
+.comment small{
+  padding: 5px 0;
+  /* border-radius: 10px; */
+  border-bottom: 1px solid red;
+  /* background-color: rgb(214, 214, 214); */
+}
+.comment small a{
+  color: red;
+  
+}
+
+#add-comment-btn {
+  padding: 7px 20px;
+  border-radius: 5px;
+  background-color: rgb(153, 153, 153);
+  /* color: red; */
+  transform: scale(1.01);
+}
+#add-comment-btn:hover {
+  background-color: rgb(128, 128, 128);
+}

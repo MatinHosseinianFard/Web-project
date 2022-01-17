@@ -1,0 +1,228 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}صفحه اصلی{% endblock title %}صفحه اصلی
+
+{% block content %}
+
+<div class="body" id="body-height">
+    <div class="slideshow-container">
+
+        <div id="1" class="mySlides">
+
+            <a href="more.html">
+                <img class="img one" src="{{ slider.0.image.url }}">
+                <div class="text firstPic">
+                    <h6>
+                        {{ slider.0.title }}
+                    </h6>
+                    {% comment %} <p>
+                        لورم ایپسوم لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم
+                    </p> {% endcomment %}
+
+                </div>
+            </a>
+
+            <!-- <div class="numbertext">1 / 3</div> -->
+            <a href="more.html">
+                <img class="img two" src="{{ slider.1.image.url }}">
+                <div class="text mainPic">
+                    <h6>
+                        {{ slider.1.title }}
+                    </h6>
+                    {% comment %} <p>
+                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک
+                        است،
+                    </p> {% endcomment %}
+                </div>
+            </a>
+
+            <a href="more.html">
+                <img class="img three" src="{{ slider.2.image.url }}">
+                <div class="text secondPic">
+                    <h6>
+                        {{ slider.2.title }}
+                    </h6>
+                    {% comment %} <p>
+                        لورم ایپسوم از صنعت چاپ، و با استفاده از طراحان گرافیک است،
+                    </p> {% endcomment %}
+                </div>
+            </a>
+
+
+        </div>
+
+        <div class="mySlides fade" id="2">
+
+            <a href="more.html">
+                <img class="img one" src="{{ slider.3.image.url }}">
+                <div class="text firstPic">
+                    <h6>
+                        {{ slider.3.title }}
+                    </h6>
+                    {% comment %} <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم </p> {% endcomment %}
+                </div>
+            </a>
+
+            <a href="more.html">
+                <img class="img two" src="{{ slider.4.image.url }}">
+                <div class="text mainPic">
+                    <h6>
+                        {{ slider.4.title }}
+                    </h6>
+                    {% comment %} <p>
+                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده 
+                    </p> {% endcomment %}
+                </div>
+            </a>
+
+            <!-- <div class="numbertext">2 / 3</div> -->
+            <a href="more.html">
+                <img class="img three" src="{{ slider.5.image.url }}">
+                <div class="text secondPic">
+                    <h6>
+                        {{ slider.5.title }} 
+                    </h6>
+                    {% comment %} <p>
+                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم 
+                    </p> {% endcomment %}
+                </div>
+            </a>
+
+        </div>
+
+        <a class="prev" onclick="plusSlides(0)">&#10095;</a>
+        <a class="next" onclick="plusSlides(-2)">&#10094;</a>
+
+    </div>
+
+    <br>
+
+    <div style="text-align:center">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <!-- <span class="dot" onclick="currentSlide(3)"></span>
+        <span class="dot" onclick="currentSlide(4)"></span>
+        <span class="dot" onclick="currentSlide(5)"></span> -->
+    </div>
+
+    <!-- this js file should be load here beacuse of slideShow -->
+    <script src="{% static 'javaScripts/slide.js' %}"></script>
+
+    <div class="container grid">
+        <h2>جدیدترین ها</h2>
+        {% for post in posts %}
+            <div class="article grid more_side_right">
+                <div class="article-head flex">
+                    <h3><a href="{% url 'article-detail' post.pk %}">{{ post.title }} | <small>{{ post.date|date:"D d M Y" }} |</small></a></h3>
+                    <h4><a href="{% url 'all-posts' %}?q={{post.category}}">| {{ post.category }} |</a></h4>
+                </div>
+                <img src="{{ post.image.url }}" alt="">
+                {% autoescape off %}
+                {{ post.body|truncatechars:240|safe }}
+                {% endautoescape %}
+                
+                    <br>
+                    <span class="tag">
+                        {% for tag in post.tags.all %}
+                            <span>#{{ tag.caption }}</span>
+                        {% endfor %}
+                        <span>#{{post.id}}</span>
+                    </span>
+                
+            </div>
+            {% endfor %}
+            
+            <div class="sidebar">
+
+                <div class="grid" id="more_side_left">
+
+                    <h4>پربازدید ترینها</h4>
+                    <div class="suggestions">
+
+                        <div class="flex">
+                            {% for item in most_view %}
+                            
+                            <div class="suggestions-head">
+                                <a href="{% url 'article-detail' item.pk %}">{{ item.title }} {{item.visitors}} <span>| ورزشی </span></a>
+                                <!-- <a href=""></a> -->
+                            </div>
+
+                            {% endfor %}
+                            <div class="pagination">
+                                {% if most_view.has_previous %}
+                            <a href="/?page2={{ most_view.previous_page_number }}}&page3={{ most_comment.number }}">قبلی</a>
+                        {% endif %}
+                            <span class="page-current">
+                                صفحه {{ most_view.number }} از {{ most_view.paginator.num_pages }}
+                            </span>
+                        {% if most_view.has_next %}
+                            <a href="/?page2={{ most_view.next_page_number }}&page3={{ most_comment.number }}">بعدی</a>
+                        {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4>بیشترین کامنتها</h4>
+                    <div class="suggestions">
+
+                        <div class="flex">
+                            {% for item in most_comment %}
+                            
+                            <div class="suggestions-head">
+                                <a href="{% url 'article-detail' item.pk %}">{{ item.title }} {{item.true_comment_count}} <span>| {{ item.category }} </span></a>
+                                <!-- <a href=""></a> -->
+                            </div>
+
+                            {% endfor %}
+                            <div class="pagination">
+                                {% if most_comment.has_previous %}
+                            <a href="/?page3={{ most_comment.previous_page_number }}&page2={{ most_view.number }}">قبلی</a>
+                        {% endif %}
+                            <span class="page-current">
+                                صفحه {{ most_comment.number }} از {{ most_comment.paginator.num_pages }}
+                            </span>
+                        {% if most_comment.has_next %}
+                            <a href="/?page3={{ most_comment.next_page_number }}&page2={{ most_view.number }}">بعدی</a>
+                        {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slideShow_ads" style="position: sticky;">
+                        <div class="iframe">
+                            <a href="#">
+                                <div class="adsSlides adsFade">
+                                    <img src="{% static 'images/gif1.gif' %}" alt="">
+                                </div>
+                                <div class="adsSlides adsFade">
+                                    <img src="{% static 'images/gif2.gif' %}" alt="">
+                                </div>
+                                <div class="adsSlides adsFade">
+                                    <img src="{% static 'images/gif3.gif' %}" alt="">
+                                </div>
+                                <div class="adsSlides adsFade">
+                                    <img src="{% static 'images/gif4.gif' %}" alt="">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- second ads slideShow -->
+                    <!-- {% comment %} <div class="iframe">
+                        <a href="#">
+                            <div class="adsSlides2 adsFade">
+                                <img src="{% static 'images/gif3.gif' %}" alt="">
+                            </div>
+                            <div class="adsSlides2 adsFade">
+                                <img src="{% static 'images/gif4.gif' %}" alt="">
+                            </div>
+                        </a>
+                    </div> {% endcomment %} -->
+                </div>
+                <script src="{% static 'javaScripts/ads.js' %}"></script>
+
+            </div>
+    </div>
+</div>
+
+
+{% endblock content %}

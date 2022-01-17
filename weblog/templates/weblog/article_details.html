@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}ادمه مطلب{% endblock title %}
+
+{% block content %}
+
+<div class="more">
+    <div class="container grid">
+        <div class="grid" id="more_side_right">
+            <div class="more-head flex">
+                <h3><a href="">{{ post.title }}--{{ post.visitors }}</a></h3>
+                <h4><a href="">| {{ post.category }} |</a></h4>
+            </div>
+
+            <img src="{{ post.image.url }}" alt="">
+            {{ post.body|safe }}
+
+
+            <span class="tag">
+                <span style="font-size: medium">نویسنده: {{ post.author.first_name }} {{ post.author.last_name }}</span>
+                
+                <div>
+                    {% for tag in post.tags.all %}
+                    <span>#<a href="{% url 'all-posts' %}?q={{ tag.caption }}">{{ tag.caption }}</a></span>
+                {% endfor %}
+                <span>#{{post.id}}</span>
+                </div>
+            </span>
+        </div>
+        <br>
+        <br>
+        
+        <div class="sidebar">
+
+            <div class="grid" id="more_side_left">
+
+                <div class="slideShow_ads" style="position: sticky;">
+                    <div class="iframe">
+                        <a href="#">
+                            <div class="adsSlides adsFade">
+                                <img src="{% static 'images/gif1.gif' %}" alt="">
+                            </div>
+                            <div class="adsSlides adsFade">
+                                <img src="{% static 'images/gif2.gif' %}" alt="">
+                            </div>
+                        </a>
+                    </div>
+                    <!-- second ads slideShow -->
+                        <div class="iframe">
+                            <a href="#">
+                                <div class="adsSlides2 adsFade">
+                                    <img src="{% static 'images/gif3.gif' %}" alt="">
+                                </div>
+                                <div class="adsSlides2 adsFade">
+                                    <img src="{% static 'images/gif4.gif' %}" alt="">
+                                </div>
+                            </a>
+                        </div>
+                </div>
+            </div>
+            <script src="{% static 'javaScripts/ads.js' %}"></script>
+
+        </div>
+        <div class="add-comment">
+            <a id="add-comment-btn" href="{% url 'add-comment' post.pk %}">افزودن نظر</a>
+        </div>
+        
+        <div class="grid comment">
+            
+            <h3>نظرات</h3>
+            {% for comment in comments %}
+                <div class="comment-con">
+    
+                    {{ comment.name }} - {{ comment.date_added }}
+                    
+                    <p class="comment-text">{{ comment.text }}</p>
+                    {% for sub_comment in comment.child.all %}
+                    
+                        {% if sub_comment.status %}
+                            <span class="replied-comment-date">{{ sub_comment.name }} - {{ sub_comment.date_added }}</span>
+                        
+                        <p class="replied-comment-text">{{ sub_comment.text }}</p>
+                        {% endif %}
+                    {% endfor %}
+    
+                    <small>
+                        <a href="{% url 'add-sub-comment' post.pk comment.id %}">ریپلای</a>
+                    </small>
+    
+                </div>
+                
+                <br>
+            {% endfor %}   
+    
+        </div>
+    </div>
+    
+</div>
+
+{% endblock content %}

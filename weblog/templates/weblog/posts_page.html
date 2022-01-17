@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}لیست اخبار{% endblock title %}
+
+{% block content %}
+
+<div class="body self-category">
+
+    <div class="container grid">
+        {% comment %} <h2>لیست اخبار</h2> {% endcomment %}
+        <div class="filter">
+            <form method="GET" action="{% url 'all-posts' %}" class="filter-form">
+                <div class="range-filter">
+                    <label for="">از:</label><input type="date" name="d_min" >
+                    <label for="">تا:</label><input type="date" name="d_max" >
+                </div>
+
+                <div class="date-filter">
+                    <label for="">ترتیب بر اساس تاریخ:</label>
+                        <select name="o_date">
+                            <option value="">-----------</option>
+                            <option value="date">صعودی</option>
+                            <option value="-date">نزولی</option>
+                        </select>
+                    <label for="">ترتیب بر اساس بازدید:</label>
+                        <select name="o_view">
+                            <option value="">-----------</option>
+                            <option value="visitors">صعودی</option>
+                            <option value="-visitors">نزولی</option>
+                        </select>
+                    </div>                    
+                <button>اعمال فیلتر</button>
+            </form>
+        </div>
+        {% if posts %}
+        {% for post in posts %}
+            <div class="article grid more_side_right">
+                <div class="article-head flex">
+                    <h3><a href="{% url 'article-detail' post.pk %}">{{ post.title }} | <small>{{ post.date|date:"D d M Y" }} |</small></a></h3>
+                    <h4><a href="?q={{post.category}}">| {{ post.category }} |</a></h4>
+                </div>
+                <img src="{{ post.image.url }}" alt="">
+                {% autoescape off %}
+                {{ post.body|truncatechars:240|safe }}
+                {% endautoescape %}
+                
+                    <br>
+                    <span class="tag">
+                        {% for tag in post.tags.all %}
+                            <span>#<a href="?q={{ tag.caption }}">{{ tag.caption }}</a></span>
+                        {% endfor %}
+                        <span>#{{post.id}}</span>
+                    </span>
+            </div>
+            {% endfor %}
+            <div class="pagination">
+                {% if posts.has_previous %}
+            <a href="?page1={{ posts.previous_page_number }}&page2={{ most_view.number }}&page3={{ most_comment.number }}{% if query %}&q={{query}}{% endif %}{% if o_date %}&o_date={{ o_date }}{% endif %}{% if o_view %}&o_view={{ o_view }}{% endif %}{% if d_min %}&d_min={{ d_min }}{% endif %}{% if d_max %}&d_max={{ d_max }}{% endif %}">قبلی</a>
+        {% endif %}
+            <span class="page-current">
+                صفحه {{ posts.number }} از {{ posts.paginator.num_pages }}
+            </span>
+        {% if posts.has_next %}
+            <a href="?page1={{ posts.next_page_number }}&page2={{ most_view.number }}&page3={{ most_comment.number }}{% if query %}&q={{query}}{% endif %}{% if o_date %}&o_date={{ o_date }}{% endif %}{% if o_view %}&o_view={{ o_view }}{% endif %}{% if d_min %}&d_min={{ d_min }}{% endif %}{% if d_max %}&d_max={{ d_max }}{% endif %}">بعدی</a>
+        {% endif %}
+            </div>
+        {% else %}
+            <h3>یافت نشد.</h3>
+        {% endif %}
+        
+            <div class="sidebar">
+
+                <div class="grid" id="more_side_left">
+
+                    <h4>پربازدید ترینها</h4>
+                    <div class="suggestions">
+
+                        <div class="flex">
+                            {% for item in most_view %}
+                            
+                            <div class="suggestions-head">
+                                <a href="{% url 'article-detail' item.pk %}">{{ item.title }} {{item.visitors}} <span>| {{ item.category }} </span></a>
+                                <!-- <a href=""></a> -->
+                            </div>
+
+                            {% endfor %}
+                            <div class="pagination">
+                                {% if most_view.has_previous %}
+                            <a href="?page2={{ most_view.previous_page_number }}&page1={{ posts.number }}&page3={{ most_comment.number }}{% if query %}&q={{query}}{% endif %}{% if o_date %}&o_date={{ o_date }}{% endif %}{% if o_view %}&o_view={{ o_view }}{% endif %}{% if d_min %}&d_min={{ d_min }}{% endif %}{% if d_max %}&d_max={{ d_max }}{% endif %}">قبلی</a>
+                        {% endif %}
+                            <span class="page-current">
+                                صفحه {{ most_view.number }} از {{ most_view.paginator.num_pages }}
+                            </span>
+                        {% if most_view.has_next %}
+                            <a href="?page2={{ most_view.next_page_number }}&page1={{ posts.number }}&page3={{ most_comment.number }}{% if query %}&q={{query}}{% endif %}{% if o_date %}&o_date={{ o_date }}{% endif %}{% if o_view %}&o_view={{ o_view }}{% endif %}{% if d_min %}&d_min={{ d_min }}{% endif %}{% if d_max %}&d_max={{ d_max }}{% endif %}">بعدی</a>
+                        {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4>بیشترین کامنتها</h4>
+                    <div class="suggestions">
+
+                        <div class="flex">
+                            {% for item in most_comment %}
+                            
+                            <div class="suggestions-head">
+                                <a href="{% url 'article-detail' item.pk %}">{{ item.title }} {{item.true_comment_count}} <span>| {{ item.category }} </span></a>
+                                <!-- <a href=""></a> -->
+                            </div>
+
+                            {% endfor %}
+                            <div class="pagination">
+                                {% if most_comment.has_previous %}
+                            <a href="?page3={{ most_comment.previous_page_number }}&page1={{ posts.number }}&page2={{ most_view.number }}{% if query %}&q={{query}}{% endif %}{% if o_date %}&o_date={{ o_date }}{% endif %}{% if o_view %}&o_view={{ o_view }}{% endif %}{% if d_min %}&d_min={{ d_min }}{% endif %}{% if d_max %}&d_max={{ d_max }}{% endif %}">قبلی</a>
+                        {% endif %}
+                            <span class="page-current">
+                                صفحه {{ most_comment.number }} از {{ most_comment.paginator.num_pages }}
+                            </span>
+                        {% if most_comment.has_next %}
+                            <a href="?page3={{ most_comment.next_page_number }}&page1={{ posts.number }}&page2={{ most_view.number }}{% if query %}&q={{query}}{% endif %}{% if o_date %}&o_date={{ o_date }}{% endif %}{% if o_view %}&o_view={{ o_view }}{% endif %}{% if d_min %}&d_min={{ d_min }}{% endif %}{% if d_max %}&d_max={{ d_max }}{% endif %}">بعدی</a>
+                        {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slideShow_ads" style="position: sticky;">
+                        <div class="iframe">
+                            <a href="#">
+                                <div class="adsSlides adsFade">
+                                    <img src="{% static 'images/gif1.gif' %}" alt="">
+                                </div>
+                                <div class="adsSlides adsFade">
+                                    <img src="{% static 'images/gif2.gif' %}" alt="">
+                                </div>
+                            </a>
+                        </div>
+                        <!-- second ads slideShow -->
+                        {% comment %} <div class="iframe">
+                            <a href="#">
+                                <div class="adsSlides2 adsFade">
+                                    <img src="{% static 'images/gif3.gif' %}" alt="">
+                                </div>
+                                <div class="adsSlides2 adsFade">
+                                    <img src="{% static 'images/gif4.gif' %}" alt="">
+                                </div>
+                            </a>
+                        </div> {% endcomment %}
+                    </div>
+                </div>
+                <script src="{% static 'javaScripts/ads.js' %}"></script>
+
+            </div>
+    </div>
+</div>
+
+
+{% endblock content %}

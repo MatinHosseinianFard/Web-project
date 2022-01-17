@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}پروفایل{% endblock title %}پروفایل
+
+{% block content %}
+
+<div class="body self-category">
+
+<div class="container grid">
+<h2>پست های شما</h2>
+{% for post in posts %}
+            <div class="article grid more_side_right">
+                <div class="article-head flex">
+                    <h3><a href="{% url 'article-detail' post.pk %}">{{ post.title }} | <small>{{ post.date|date:"D d M Y" }} |</small></a></h3>
+                    <h4><a href="/?q={{post.category}}">| {{ post.category }} |</a></h4>
+                </div>
+                <img src="{{ post.image.url }}" alt="">
+                {% autoescape off %}
+                {{ post.body|truncatechars:250|safe }}
+                {% endautoescape %}
+                
+                    <br>
+                    <span class="tag">
+                        {% for tag in post.tags.all %}
+                            <span>#{{ tag.caption }}</span>
+                        {% endfor %}
+                        <span>#{{post.id}}</span>
+                    </span>
+            </div>
+            <div class="flex-button" >
+                <a class="edit" href="{% url 'update-post' post.pk %}">ویرایش</a>
+                <a class="remove" href="{% url 'delete-post' post.pk %}">حذف</a>
+                <a class="comment" href="{% url 'check-comment' post.pk %}">بررسی کامنت ها | {{ post.all_comment_count }}</a>
+                {% if post.promote %}
+                <a class="promote2" href="{% url 'promote-post' post.pk %}">خارج کردن در اسلایدر</a>                
+                {% else %}
+                <a class="promote1" href="{% url 'promote-post' post.pk %}">قرار دادن در اسلایدر</a>
+                {% endif %}
+            </div>
+{% endfor %}
+            <div class="pagination">
+                {% if posts.has_previous %}
+            <a href="?page={{ posts.previous_page_number }}">قبلی</a>
+        {% endif %}
+            <span class="page-current">
+                صفحه {{ posts.number }} از {{ posts.paginator.num_pages }}
+            </span>
+        {% if posts.has_next %}
+            <a href="?page={{ posts.next_page_number }}">بعدی</a>
+        {% endif %}
+            </div>
+</div>
+</div>
+
+{% endblock content %}

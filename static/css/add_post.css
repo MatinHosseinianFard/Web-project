@@ -1,0 +1,55 @@
+.add-post{
+    margin: 10vh 20vw;
+    border-radius: 10px;
+}
+
+.add-post h1{
+    margin: 20px 0;
+}
+
+.add-post .flex{
+    display: flex;
+    flex-direction: column;  
+    justify-content: unset;
+    margin: 20vh 0;
+    height: auto;
+}
+
+.add-post input {
+    margin: 10px 0;
+}
+
+.add-post-field {
+    margin: 15px 0;
+}
+
+.title-post {
+    width: 30vw;
+    padding: 5px;
+    font-size: medium;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+}
+
+.tags-post {
+    padding:0 10px;
+    font-size: medium;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    overflow: scroll;
+
+}
+
+.category-post {
+    padding: 3px;
+    font-size: medium;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+}
+.add-post .btn {
+    width: 100px;
+    font-size: medium;
+}

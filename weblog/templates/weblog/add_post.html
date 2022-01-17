@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+      {% block title %}افزودن پست{% endblock title %}
+      {% block navbar %}{% endblock navbar %}
+
+        {% block content %}
+        
+        <div class="add-post">
+            <div class="flex">
+                <h1>افزودن پست</h1>
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.media }}
+                    {% for field in form %}
+                        
+                        <div class="add-post-field">
+                            {{ field.label_tag }}
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+                    
+                    <input type="submit" value="ثبت" class="btn btn-primary">
+                    
+                </form>
+            </div>
+        </div>
+        
+    <script>
+        var name = "{{ user.id }}";
+        document.getElementById("elder").value = name;
+    </script>
+
+    {% endblock content %}
+
+    {% block footer %}{% endblock footer %}
+
