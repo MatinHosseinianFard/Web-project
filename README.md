@@ -4,7 +4,5 @@ Web programming blog project with Django
 
 
 
-
-
-https://user-images.githubusercontent.com/88796613/179483994-5d8fc4cc-c5b4-479a-9736-d2461155de49.mp4
+https://user-images.githubusercontent.com/88796613/179487604-37e1da26-3d51-41fc-a20d-d52809c91c95.mp4
 
